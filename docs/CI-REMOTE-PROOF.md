@@ -39,7 +39,17 @@ npm install -g "@openai/codex@${CODEX_CLI_VERSION}"
 python scripts/run_ci_gates.py --tier full --pack agent-packs/world-class-reviewer --timeout 600 --plugin-timeout 120
 ```
 
-The GitHub workflow intentionally fails the full proof when `OPENAI_API_KEY` is not configured. A green static job without a green full proof is not enough to claim managed-agent autonomy, mobile/web availability, or provider parity.
+Push and pull-request workflows run static gates only. The full Codex proof is manual so normal commits do not show red just because the repository has no Codex secret.
+
+To run full proof remotely:
+
+1. Add the `OPENAI_API_KEY` repository secret.
+2. Open GitHub Actions.
+3. Choose `Codex Agent Gates`.
+4. Select `Run workflow`.
+5. Set `run_full_codex_proof=true`.
+
+A green static job without a green manual full proof is not enough to claim managed-agent autonomy, mobile/web availability, or provider parity.
 
 ## Required GitHub Secret
 

@@ -57,7 +57,9 @@ python .\scripts\run_ci_gates.py --tier static --pack .\agent-packs\world-class-
 python .\scripts\run_ci_gates.py --tier full --pack .\agent-packs\world-class-reviewer --timeout 600 --plugin-timeout 120
 ```
 
-The static tier is dependency-free. The full tier requires a working Codex CLI and either `OPENAI_API_KEY` or `CODEX_HOME/auth.json`. In GitHub Actions, the full proof intentionally fails until the repository has an `OPENAI_API_KEY` secret; see `docs/CI-REMOTE-PROOF.md`.
+The static tier is dependency-free. The full tier requires a working Codex CLI and either `OPENAI_API_KEY` or `CODEX_HOME/auth.json`. In GitHub Actions, the full proof is manual and requires the repository secret `OPENAI_API_KEY`; see `docs/CI-REMOTE-PROOF.md`.
+
+GitHub push and pull-request runs execute static gates only. To run the authenticated full Codex proof in GitHub, open Actions, choose `Codex Agent Gates`, run the workflow manually, and set `run_full_codex_proof=true`. That manual proof requires the repository secret `OPENAI_API_KEY`.
 
 `run_behavior_gate.py` defaults to clean-room Codex execution by forwarding `--ignore-user-config`, `--ignore-rules`, and `--disable plugins` into `codex exec`, plus a temporary `CODEX_HOME` seeded only with `auth.json` when available. It also requires each case to pass hidden deterministic semantic rubrics stored in the eval case files but not sent in the prompt, plus an independent deterministic second-opinion evaluator for high-risk verdict alignment, evidence quality, uncertainty boundaries, risk inventory, rollback, and bounded human questions. Use `--use-user-config` only when diagnosing local plugin or personal-rule interactions; that mode is not promotion evidence.
 

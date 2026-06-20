@@ -43,4 +43,4 @@ Rollback is deleting the temporary checkout or removing the accidental nested `.
 
 ## CI Publication Guard
 
-The first push should include `.github/workflows/codex-gates.yml`. Static CI can pass without secrets. The full Codex proof requires an `OPENAI_API_KEY` repository secret and should fail if the secret is missing. Do not reinterpret that failure as a product bug; it is an unproven remote-runtime boundary.
+The first push should include `.github/workflows/codex-gates.yml`. Static CI can pass without secrets. The full Codex proof is manual and requires an `OPENAI_API_KEY` repository secret. Do not reinterpret a skipped full proof as product readiness; it is an unproven remote-runtime boundary until the manual full proof passes.

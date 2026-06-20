@@ -32,7 +32,7 @@ Skipping straight to hosted agents would hide the most dangerous unknowns: runti
 | Human escalation | Asks minimum blocking questions and routes high-risk approvals | Skill instruction only |
 | Observability | Tracks cost, duration, failures, drift, and repeat incidents | Partial Codex usage capture |
 | Job contract | Defines pack, task, runtime, autonomy tier, policy, workspace, eval gate, and receipt target | `spec/managed-job.schema.json` |
-| CI runner | Replays promotion gates from a fresh checkout | Static GitHub Actions job plus authenticated full Codex job |
+| CI runner | Replays promotion gates from a fresh checkout | Static GitHub Actions job plus manual authenticated full Codex job |
 
 ## Runtime Ladder
 
@@ -84,12 +84,12 @@ The platform is not ready to call managed until it can prove:
 10. Repeated-run variance stays inside explicit thresholds before packaging or provider parity claims.
 11. Plugin packaging proves local disposable install/discovery before normal profile install, sharing, CI, cloud, mobile, or provider parity claims.
 12. Plugin packaging variance proves stable package fingerprints, marketplace fingerprints, CLI install behavior, and prompt-input discovery before public/repo packaging or remote claims.
-13. Remote proof requires the authenticated full Codex GitHub Actions job to pass; static CI alone is not autonomy evidence.
+13. Remote proof requires the manual authenticated full Codex GitHub Actions job to pass; static CI alone is not autonomy evidence.
 
 ## Next Build Order
 
 1. Push the dedicated `mithunyc/agent-launch-framework` repo without parent `titan-research` state.
-2. Configure `OPENAI_API_KEY` and prove the authenticated full Codex GitHub Actions job.
+2. Configure `OPENAI_API_KEY` and prove the manual authenticated full Codex GitHub Actions job.
 3. Add public/repo marketplace packaging only after disposable packaging remains stable locally and in CI.
 4. Add a local job queue only after the job contract and gates stay stable.
 5. Add remote execution through Codex cloud where available.
