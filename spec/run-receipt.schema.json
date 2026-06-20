@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/agent-launch-framework/run-receipt.schema.json",
+  "title": "Agent Launch Framework Run Receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "agent_pack",
+    "task",
+    "runtime",
+    "started_at",
+    "completed_at",
+    "evidence",
+    "checks",
+    "dod_score",
+    "risks",
+    "memory_proposals",
+    "self_improvement_proposals",
+    "rollback"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "agent_pack": { "type": "string" },
+    "task": { "type": "string" },
+    "runtime": { "type": "string" },
+    "started_at": { "type": "string" },
+    "completed_at": { "type": "string" },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "source", "summary"],
+        "properties": {
+          "type": { "type": "string" },
+          "source": { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status", "evidence"],
+        "properties": {
+          "name": { "type": "string" },
+          "status": { "enum": ["pass", "fail", "blocked", "not-run"] },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "dod_score": {
+      "type": "object",
+      "required": ["score", "max_score", "verdict"],
+      "properties": {
+        "score": { "type": "integer", "minimum": 0 },
+        "max_score": { "type": "integer", "minimum": 1 },
+        "verdict": { "enum": ["pass", "fail", "blocked"] }
+      }
+    },
+    "risks": { "type": "array", "items": { "type": "string" } },
+    "memory_proposals": { "type": "array" },
+    "self_improvement_proposals": { "type": "array" },
+    "rollback": { "type": "string" }
+  },
+  "additionalProperties": true
+}

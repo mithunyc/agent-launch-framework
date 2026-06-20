@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/agent-launch-framework/managed-job.schema.json",
+  "title": "Agent Launch Framework Managed Job",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "job_id",
+    "agent_pack",
+    "task",
+    "runtime",
+    "autonomy_tier",
+    "policy",
+    "workspace",
+    "eval_gate",
+    "receipt",
+    "created_at"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "job_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,120}$"
+    },
+    "agent_pack": {
+      "type": "object",
+      "required": ["id", "version"],
+      "properties": {
+        "id": { "type": "string" },
+        "version": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "task": {
+      "type": "object",
+      "required": ["kind", "prompt"],
+      "properties": {
+        "kind": { "type": "string" },
+        "prompt": { "type": "string" },
+        "inputs": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["adapter", "surface"],
+      "properties": {
+        "adapter": { "type": "string" },
+        "surface": { "type": "string" },
+        "sandbox": { "type": "string" },
+        "timeout_seconds": { "type": "integer", "minimum": 1 },
+        "clean_room": { "type": "boolean" },
+        "isolated_codex_home": { "type": "boolean" },
+        "codex_exec_flags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "autonomy_tier": {
+      "enum": ["A0-read-only", "A1-draft-only", "A2-write-safe", "A3-external-mutation", "A4-self-improvement"]
+    },
+    "policy": {
+      "type": "object",
+      "required": ["approval_required", "allowed_actions", "blocked_actions"],
+      "properties": {
+        "approval_required": { "type": "boolean" },
+        "allowed_actions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "blocked_actions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "workspace": {
+      "type": "object",
+      "required": ["strategy"],
+      "properties": {
+        "strategy": { "enum": ["disposable", "git-worktree", "existing-read-only", "remote"] },
+        "path": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "eval_gate": {
+      "type": "object",
+      "required": ["required", "cases"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "cases": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "semantic_required": { "type": "boolean" },
+        "second_opinion_required": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "variance_gate": {
+      "type": "object",
+      "required": ["required", "runs", "max_answer_fingerprint_drift", "max_structural_count_drift"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "runs": { "type": "integer", "minimum": 2 },
+        "max_answer_fingerprint_drift": { "type": "number", "minimum": 0, "maximum": 1 },
+        "max_structural_count_drift": { "type": "integer", "minimum": 0 },
+        "semantic_score_drift_allowed": { "type": "integer", "minimum": 0 },
+        "case_status_drift_allowed": { "type": "integer", "minimum": 0 },
+        "second_opinion_score_drift_allowed": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "receipt": {
+      "type": "object",
+      "required": ["required", "target"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "target": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "created_at": { "type": "string" }
+  },
+  "additionalProperties": false
+}

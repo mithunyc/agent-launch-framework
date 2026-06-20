@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/agent-launch-framework/agent-pack.schema.json",
+  "title": "Agent Launch Framework Pack",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "version",
+    "mission",
+    "risk_default",
+    "runtimes",
+    "skills",
+    "policies",
+    "evals",
+    "receipts",
+    "memory",
+    "self_improvement"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,80}$" },
+    "name": { "type": "string", "minLength": 3 },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "mission": { "type": "string", "minLength": 20 },
+    "risk_default": { "enum": ["read-only", "advisory", "write-safe", "deploy-safe"] },
+    "runtimes": {
+      "type": "array",
+      "items": { "enum": ["codex-skill", "codex-cli", "codex-app-automation", "codex-cloud", "github-action", "claude", "local-llm"] },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "skills": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,80}$" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "policies": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 3,
+      "uniqueItems": true
+    },
+    "evals": {
+      "type": "object",
+      "required": ["cases"],
+      "properties": {
+        "cases": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "receipts": {
+      "type": "object",
+      "required": ["template"],
+      "properties": {
+        "template": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "memory": {
+      "type": "object",
+      "required": ["policy"],
+      "properties": {
+        "policy": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "self_improvement": {
+      "type": "object",
+      "required": ["policy"],
+      "properties": {
+        "policy": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

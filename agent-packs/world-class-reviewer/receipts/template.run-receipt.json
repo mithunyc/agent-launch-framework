@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1.0",
+  "agent_pack": "world-class-reviewer",
+  "task": "",
+  "runtime": "",
+  "started_at": "",
+  "completed_at": "",
+  "evidence": [],
+  "checks": [],
+  "dod_score": {
+    "score": 0,
+    "max_score": 7,
+    "verdict": "blocked"
+  },
+  "risks": [],
+  "memory_proposals": [],
+  "self_improvement_proposals": [],
+  "rollback": ""
+}

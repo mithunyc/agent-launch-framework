@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/agent-launch-framework/codex-behavior-report.schema.json",
+  "title": "Codex Behavioral Eval Report",
+  "type": "object",
+  "required": [
+    "case_id",
+    "verdict",
+    "answer",
+    "evidence",
+    "risks",
+    "blocking_questions",
+    "self_grade"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "description": "The eval case id supplied in the prompt."
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["proceed", "pause", "block", "cannot-confirm"]
+    },
+    "answer": {
+      "type": "object",
+      "required": ["facts", "inferences", "unverified", "recommendation", "rollback"],
+      "properties": {
+        "facts": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "inferences": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "unverified": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "recommendation": {
+          "type": "string"
+        },
+        "rollback": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "source", "summary"],
+        "properties": {
+          "type": { "type": "string" },
+          "source": { "type": "string" },
+          "summary": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "blocking_questions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 3
+    },
+    "self_grade": {
+      "type": "object",
+      "required": ["score", "max_score", "explanation"],
+      "properties": {
+        "score": { "type": "integer", "minimum": 0 },
+        "max_score": { "type": "integer", "minimum": 1 },
+        "explanation": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

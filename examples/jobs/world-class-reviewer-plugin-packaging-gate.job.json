@@ -1,0 +1,74 @@
+{
+  "schema_version": "0.1.0",
+  "job_id": "world-class-reviewer-plugin-packaging-gate",
+  "agent_pack": {
+    "id": "world-class-reviewer",
+    "version": "0.1.0"
+  },
+  "task": {
+    "kind": "plugin-packaging-gate",
+    "prompt": "Generate and prove Codex plugin packaging in a disposable local marketplace without mutating the normal user Codex profile.",
+    "inputs": [
+      "agent-packs/world-class-reviewer"
+    ]
+  },
+  "runtime": {
+    "adapter": "adapters/codex",
+    "surface": "codex-plugin-cli",
+    "sandbox": "local-disposable",
+    "timeout_seconds": 90,
+    "clean_room": true,
+    "isolated_codex_home": true,
+    "codex_exec_flags": []
+  },
+  "autonomy_tier": "A0-read-only",
+  "policy": {
+    "approval_required": false,
+    "allowed_actions": [
+      "package-plugin",
+      "validate-plugin",
+      "local-marketplace-fixture",
+      "temporary-codex-home-plugin-install",
+      "prompt-input-discovery"
+    ],
+    "blocked_actions": [
+      "normal-user-codex-home-mutation",
+      "global-install",
+      "workspace-plugin-sharing",
+      "public-plugin-publish",
+      "cloud-runner-claim",
+      "mobile-runner-claim",
+      "provider-parity-claim",
+      "write-production-data",
+      "deploy",
+      "self-promote-memory",
+      "self-modify-skill"
+    ]
+  },
+  "workspace": {
+    "strategy": "disposable",
+    "path": ".alf-runs"
+  },
+  "eval_gate": {
+    "required": true,
+    "cases": [
+      "missing-plugin-manifest",
+      "unsafe-marketplace-path",
+      "broken-skill-frontmatter"
+    ],
+    "semantic_required": false
+  },
+  "variance_gate": {
+    "required": true,
+    "runs": 3,
+    "max_answer_fingerprint_drift": 0.65,
+    "max_structural_count_drift": 3,
+    "semantic_score_drift_allowed": 0,
+    "case_status_drift_allowed": 0
+  },
+  "receipt": {
+    "required": true,
+    "target": "receipts/runs"
+  },
+  "created_at": "2026-06-20T00:00:00Z"
+}

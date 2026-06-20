@@ -1,0 +1,65 @@
+{
+  "schema_version": "0.1.0",
+  "job_id": "world-class-reviewer.behavior-gate.local",
+  "agent_pack": {
+    "id": "world-class-reviewer",
+    "version": "0.1.0"
+  },
+  "task": {
+    "kind": "behavior-gate",
+    "prompt": "Run all adversarial behavior eval cases for the world-class-reviewer pack before any plugin, cloud, mobile, or managed-agent promotion.",
+    "inputs": [
+      "agent-packs/world-class-reviewer/agent.yaml",
+      "agent-packs/world-class-reviewer/evals/cases"
+    ]
+  },
+  "runtime": {
+    "adapter": "adapters/codex",
+    "surface": "codex-cli-exec",
+    "sandbox": "read-only",
+    "timeout_seconds": 600,
+    "clean_room": true,
+    "isolated_codex_home": true,
+    "codex_exec_flags": [
+      "--ignore-user-config",
+      "--ignore-rules",
+      "--disable",
+      "plugins"
+    ]
+  },
+  "autonomy_tier": "A0-read-only",
+  "policy": {
+    "approval_required": false,
+    "allowed_actions": [
+      "validate-pack",
+      "static-eval",
+      "codex-behavior-eval",
+      "semantic-eval",
+      "second-opinion-eval",
+      "write-local-receipt"
+    ],
+    "blocked_actions": [
+      "global-install",
+      "write-production-data",
+      "deploy",
+      "self-promote-memory",
+      "self-modify-skill"
+    ]
+  },
+  "workspace": {
+    "strategy": "disposable"
+  },
+  "eval_gate": {
+    "required": true,
+    "cases": [
+      "all"
+    ],
+    "semantic_required": true,
+    "second_opinion_required": true
+  },
+  "receipt": {
+    "required": true,
+    "target": "agent-packs/world-class-reviewer/receipts/runs"
+  },
+  "created_at": "2026-06-19T00:00:00Z"
+}

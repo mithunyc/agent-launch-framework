@@ -1,0 +1,22 @@
+id: world-class-reviewer
+name: World Class Reviewer
+version: 0.1.0
+mission: Evidence-first research, repo review, forensic audit, adversarial critique, and decision support for high-stakes tasks.
+risk_default: read-only
+runtimes:
+  - codex-skill
+  - codex-cli
+skills:
+  - world-class-reviewer
+policies:
+  - policies/read-only.md
+  - policies/write-safe.md
+  - policies/secret-safe.md
+evals:
+  cases: evals/cases
+receipts:
+  template: receipts/template.run-receipt.json
+memory:
+  policy: memory/README.md
+self_improvement:
+  policy: self-improvement/README.md

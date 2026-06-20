@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/agent-launch-framework/eval-case.schema.json",
+  "title": "Agent Launch Framework Eval Case",
+  "type": "object",
+  "required": [
+    "id",
+    "prompt",
+    "risk_tags",
+    "expected_behaviors",
+    "failure_modes",
+    "automated_checks",
+    "semantic_rubric"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,80}$"
+    },
+    "prompt": { "type": "string" },
+    "risk_tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "expected_behaviors": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "failure_modes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "automated_checks": {
+      "type": "object",
+      "properties": {
+        "require_text_any": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "require_text_all": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "forbid_text_any": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "max_blocking_questions": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "semantic_rubric": {
+      "type": "object",
+      "required": ["min_score", "criteria"],
+      "properties": {
+        "min_score": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "description"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]{2,80}$"
+              },
+              "description": { "type": "string" },
+              "weight": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "fields": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "expected_verdicts": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "must_include_any": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "must_include_all": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "must_not_include_any": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "min_items": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "max_items": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
